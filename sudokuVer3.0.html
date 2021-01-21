@@ -1,0 +1,355 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@500;900&family=Josefin+Sans&display=swap" rel="stylesheet">
+    <title>Sudoku Ver3.0</title>
+    <style>
+    button{
+      font-family: 'Josefin Sans', sans-serif;
+      width:50px;
+      height:50px;
+      border: 0;
+      text-align:center;
+      font-size: 24px;
+    }
+    button.btn1{
+      display:inline-block;
+    }
+    button.btn2{
+      display:inline-block;
+    }
+    table {
+      border-radius: 10px;
+      padding: 10px;
+      font-family: 'Josefin Sans', sans-serif;
+      overflow: hidden;
+      border: 2px solid #66635f;
+    }
+    p{
+      width:35px;
+      height:35px;
+      text-align:center;
+      font-size:35px;
+      background-color: white;
+    }
+		td, tr {
+			border: 2px solid black;
+		}
+    td:nth-of-type(3n) {
+        border-right: 3px solid #307307
+    }
+
+    tr:nth-of-type(3n) td {
+        border-bottom: 3px solid #307307;
+    }
+    td:first-child{
+        border-left: 3px solid #307307;
+    }
+    tr:first-child td {
+        border-top: 3px solid #307307;
+    }
+    input{
+      font-family: 'Josefin Sans', sans-serif;
+      width:35px;
+      height:35px;
+      border: 0;
+      text-align:center;
+    }
+    #myDIV{
+      border-radius: 10px;
+      display:none;
+      width:300px;
+      position: relative;
+      border: 3px solid green;
+    }
+    button{
+      border-radius: 10px;
+    }
+		</style>
+  </head>
+  <body>
+    <table id="tbl">
+
+    </table>
+    <div id="myDIV">
+      <button onclick="numTest('bt1')"id="bt1" class="btn1">1</button>
+      <button onclick="numTest('bt2')"id="bt2" class="btn1">2</button>
+      <button onclick="numTest('bt3')"id="bt3" class="btn1">3</button>
+      <button onclick="numTest('bt4')"id="bt4" class="btn1">4</button>
+      <button onclick="numTest('bt5')"id="bt5" class="btn1">5</button>
+      </br>
+      <button onclick="numTest('bt6')"id="bt6" class="btn2">6</button>
+      <button onclick="numTest('bt7')"id="bt7" class="btn2">7</button>
+      <button onclick="numTest('bt8')"id="bt8" class="btn2">8</button>
+      <button onclick="numTest('bt9')"id="bt9" class="btn2">9</button>
+    </div>
+    <script>
+      var clickRow=0;
+      var clickCol=0;
+      var value="1";
+      var rowNum1=["5","","","7","","","6","",""];
+      var rowNum2=["8","","","","","","9","",""];
+      var rowNum3=["","9","","","6","","","","7"];
+      var rowNum4=["","4","","","","","","",""];
+      var rowNum5=["","5","","","","","","6",""];
+      var rowNum6=["","","2","4","","7","","","8"];
+      var rowNum7=["9","","1","","","","","",""];
+      var rowNum8=["","","","","2","","8","",""];
+      var rowNum9=["","7","","1","5","","","",""];
+      var allRows=[rowNum1,rowNum2,rowNum3,rowNum4,rowNum5,rowNum6,rowNum7,rowNum8,rowNum9];
+      var outPut="";
+      for (i=0;i<allRows.length;i++){
+        outPut+="<tr>";
+        for (j=0;j<allRows[i].length;j++){
+          if (allRows[i][j]!=""){
+            outPut+="<td><p id=\"input"+i+"."+j+"\">"+allRows[i][j]+"</p></td>";
+          }else if (allRows[i][j]==""){
+
+            outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+          }
+        }
+        outPut+="</tr>";
+      }
+      function getBigCol(col){
+        return Math.floor(col/3)
+      }
+      function getBigRow(row){
+        return Math.floor(row/3)
+
+      }
+      function checkSquare(row,col,number) {
+        returnValue=[0,0,0,0]
+        for (i=getBigRow(row)*3; i<getBigRow(row)*3+3; i++) {
+          for (j=getBigCol(col)*3; j<getBigCol(col)*3+3;j++) {
+            if (allRows[i][j]==number) {
+              returnValue = [i,j,number,1]
+              break
+            }
+          }
+        }
+        return returnValue
+      }
+
+      function _checkRow(row, col, number) {
+        returnValue=[0,0,0,0]
+        for (j=0; j<9; j++) {
+          if (allRows[row][j]==number) {
+            returnValue = [row, j, number,1]
+          }
+        }
+        return returnValue
+      }
+
+      function _checkCol(row, col, number) {
+        returnValue=[0,0,0,0]
+        for (i=0; i<9; i++) {
+          if (allRows[i][col]==number) {
+            returnValue = [i, col, number,1]
+          }
+        }
+        return returnValue
+      }
+      function reloadBoard(row,col, number) {
+        returnValue2=false;
+
+        outPut=""
+        replaceSquareString = ""
+        replaceRowString = ""
+        replaceColString = ""
+        foundInSquare = false
+        foundInRow = false
+        foundInCol = false
+        replaced = false
+
+        checkSquareValue = checkSquare(row,col,number)
+        if (checkSquareValue[3] == 1) {
+          foundInSquare=true
+          replaceSquareString =
+          returnValue2=true
+        }
+        checkRowValue = _checkRow(row,col,number)
+        if (checkRowValue[3] == 1) {
+          foundInRow=true
+          returnValue2=true
+        }
+        checkColValue = _checkCol(row,col,number)
+        if (checkColValue[3] == 1) {
+          foundInCol=true
+          returnValue2=true
+        }
+        for (i=0;i<9;i++){
+          outPut+="<tr>";
+          for (j=0;j<9;j++){
+
+            if (allRows[i][j]!=""){
+              replaced = false
+              if (checkRowValue[3]!=checkSquareValue[3]) {
+                if (foundInRow) {
+                  if (i==checkRowValue[0] && j==checkRowValue[1]) {
+                    if (i!=row) {
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"center;color:red;background-color:#f5f371\">"+number+"</p></td>"
+                    }else{
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                    }
+
+                    replaced = true
+                  }
+                }
+              }
+              if (foundInCol) {
+                if (i==checkColValue[0] && j==checkColValue[1]) {
+                  if (j!=col) {
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+number+"</p></td>"
+                  }else{
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                  }
+                  replaced = true
+                }
+
+              }
+              if (checkSquareValue[1]!=checkColValue[1]||checkSquareValue[3]!=checkColValue[3]) {
+
+                if (foundInSquare) {
+                  if (i==checkSquareValue[0] && j==checkSquareValue[1]) {
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+number+"</p></td>"
+                    replaced = true
+                  }
+                }
+              }
+              if(!(foundInCol)&&!(foundInRow)&&!(foundInSquare)){
+                allowChange=true;
+                allRows[row][col]=number
+
+              }
+              if (!replaced) {
+                if (i==row&&j==col) {
+                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                }else{
+                  if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                  }else{
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\">"+allRows[i][j]+"</p></td>";
+                  }
+
+                }
+
+
+              }
+            }else if (allRows[i][j]==""){
+                if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
+                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                }else{
+                  outPut+="<td><p style=\"color:#6993d6;background-color:white\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                }
+            }
+
+          }
+          outPut+="</tr>";
+        }
+        document.getElementById("tbl").innerHTML = outPut;
+        return returnValue2
+      }
+    function checkCol(row,col,number){
+        if (checkGridCol(col)==0) {
+          for(i=0;i<3;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        } else if (checkGridCol(col)==1) {
+          for(i=3;i<6;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        } else if (checkGridCol(col)==2) {
+          for(i=6;i<9;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        }
+        return 0
+      }
+      function checkRow(row,col,number){
+        if (checkGridRow(row)==0) {
+          for(i=0;i<3;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        } else if (checkGridRow(row)==1) {
+          for(i=3;i<6;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        } else if (checkGridRow(row)==2) {
+          for(i=6;i<9;i++){
+            if (allRows[row][i]==number) {
+              return i+1+","+parseInt(row+1)
+            }
+          }
+        }
+      }
+    document.getElementById("tbl").innerHTML = outPut;
+    function myFunction(i,j) {
+      console.log("clicked")
+      clickRow=i
+      clickCol=j
+      var x = document.getElementById("myDIV");
+      x.style.display = "block";
+      for (d=0;d<9;d++){
+        for (n=0;n<9;n++){
+          var idName="input"+d+"."+n
+          var thing=document.getElementById(idName)
+          if(thing){
+            if(d==clickRow||n==clickCol){
+              thing.style.backgroundColor="#f5f371"
+            }else{
+              thing.style.backgroundColor="white"
+            }
+            if(d>=getBigRow(clickRow)*3&&d<=getBigRow(clickRow)*3+2&&n>=getBigCol(clickCol)*3&&n<=getBigCol(clickCol)*3+2){
+              thing.style.backgroundColor="#f5f371"
+            }
+          }
+        }
+      }
+    }
+    function numTest(id){
+      var x = document.getElementById("myDIV");
+      x.style.display = "none";
+      switch (id) {
+        case "bt1":
+          reloadBoard(clickRow,clickCol,1)
+          break;
+        case "bt2":
+          reloadBoard(clickRow,clickCol,2)
+          break;
+        case "bt3":
+          reloadBoard(clickRow,clickCol,3)
+          break;
+        case "bt4":
+          reloadBoard(clickRow,clickCol,4)
+          break;
+        case "bt5":
+          reloadBoard(clickRow,clickCol,5)
+          break;
+        case "bt6":
+          reloadBoard(clickRow,clickCol,6)
+          break;
+        case "bt7":
+          reloadBoard(clickRow,clickCol,7)
+          break;
+        case "bt8":
+          reloadBoard(clickRow,clickCol,8)
+          break;
+        case "bt9":
+          reloadBoard(clickRow,clickCol,9)
+          break;
+
+
+      }
+    }
+    </script>
+  </body>
+</html>
