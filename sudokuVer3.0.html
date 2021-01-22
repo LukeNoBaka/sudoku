@@ -35,17 +35,17 @@
 			border: 2px solid black;
 		}
     td:nth-of-type(3n) {
-        border-right: 3px solid #307307
+        border-right: 3px solid #b305b0;
     }
 
     tr:nth-of-type(3n) td {
-        border-bottom: 3px solid #307307;
+        border-bottom: 3px solid #b305b0;
     }
     td:first-child{
-        border-left: 3px solid #307307;
+        border-left: 3px solid #b305b0;
     }
     tr:first-child td {
-        border-top: 3px solid #307307;
+        border-top: 3px solid #b305b0;
     }
     input{
       font-family: 'Josefin Sans', sans-serif;
@@ -59,7 +59,7 @@
       display:none;
       width:300px;
       position: relative;
-      border: 3px solid green;
+      border: 3px solid #b305b0;
     }
     button{
       border-radius: 10px;
@@ -96,12 +96,13 @@
       var rowNum8=["","","","","2","","8","",""];
       var rowNum9=["","7","","1","5","","","",""];
       var allRows=[rowNum1,rowNum2,rowNum3,rowNum4,rowNum5,rowNum6,rowNum7,rowNum8,rowNum9];
+      var allRows2=JSON.parse(JSON.stringify(allRows));
       var outPut="";
       for (i=0;i<allRows.length;i++){
         outPut+="<tr>";
         for (j=0;j<allRows[i].length;j++){
           if (allRows[i][j]!=""){
-            outPut+="<td><p id=\"input"+i+"."+j+"\">"+allRows[i][j]+"</p></td>";
+            outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
           }else if (allRows[i][j]==""){
 
             outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
@@ -149,6 +150,8 @@
         return returnValue
       }
       function reloadBoard(row,col, number) {
+        console.log(allRows[row][col])
+        console.log(allRows2[row][col])
         returnValue2=false;
 
         outPut=""
@@ -186,9 +189,9 @@
                 if (foundInRow) {
                   if (i==checkRowValue[0] && j==checkRowValue[1]) {
                     if (i!=row) {
-                      outPut+="<td><p id=\"input"+i+"."+j+"\"center;color:red;background-color:#f5f371\">"+number+"</p></td>"
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"center;color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
                     }else{
-                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                     }
 
                     replaced = true
@@ -198,9 +201,9 @@
               if (foundInCol) {
                 if (i==checkColValue[0] && j==checkColValue[1]) {
                   if (j!=col) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+number+"</p></td>"
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
                   }else{
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                   }
                   replaced = true
                 }
@@ -210,7 +213,7 @@
 
                 if (foundInSquare) {
                   if (i==checkSquareValue[0] && j==checkSquareValue[1]) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\">"+number+"</p></td>"
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
                     replaced = true
                   }
                 }
@@ -219,15 +222,24 @@
                 allowChange=true;
                 allRows[row][col]=number
 
+
               }
               if (!replaced) {
                 if (i==row&&j==col) {
-                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-                }else{
+                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                }else if(allRows[i][j]!=allRows2[i][j]){
+                  console.log("hi")
                   if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:#f5f371\">"+allRows[i][j]+"</p></td>";
+                    outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
                   }else{
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\">"+allRows[i][j]+"</p></td>";
+                    outPut+="<td><p style=\"color:#6993d6\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                  }
+                }
+                else{
+                  if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                  }else{
+                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                   }
 
                 }
@@ -236,7 +248,7 @@
               }
             }else if (allRows[i][j]==""){
                 if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
-                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
                 }else{
                   outPut+="<td><p style=\"color:#6993d6;background-color:white\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                 }
@@ -244,7 +256,10 @@
 
           }
           outPut+="</tr>";
+
         }
+        console.log(allRows[row][col])
+        console.log(allRows2[row][col])
         document.getElementById("tbl").innerHTML = outPut;
         return returnValue2
       }
@@ -298,17 +313,62 @@
       clickCol=j
       var x = document.getElementById("myDIV");
       x.style.display = "block";
+      x.style.color="blue"
       for (d=0;d<9;d++){
         for (n=0;n<9;n++){
           var idName="input"+d+"."+n
           var thing=document.getElementById(idName)
           if(thing){
+            if (allRows[i][j]==allRows[d][n]) {
+              console.log(x.value)
+              console.log(thing.value)
+              thing.style.color="blue"
+            }else{
+              if (thing.style.color=="blue") {
+                thing.style.color="black"
+              }
+            }
             if(d==clickRow||n==clickCol){
+              thing.style.backgroundColor="#f5f371"
+            }else if(d!=clickRow&&n!=clickCol){
+              thing.style.backgroundColor="white"
+            }
+            if(d>=getBigRow(clickRow)*3&&d<=getBigRow(clickRow)*3+2&&n>=getBigCol(clickCol)*3&&n<=getBigCol(clickCol)*3+2){
+              thing.style.backgroundColor="#f5f371"
+            }
+          }
+        }
+      }
+    }
+    function highlightNum(i,j){
+      var clickID="input"+i+"."+j
+      var clickVal=document.getElementById(clickID)
+      console.log(clickVal.value)
+      clickVal.style.color="blue"
+      var x = document.getElementById("myDIV");
+      x.style.display = "none";
+      for (d=0;d<9;d++){
+        for (n=0;n<9;n++){
+          var idName="input"+d+"."+n
+          var thing=document.getElementById(idName)
+          if(thing){
+            if (allRows[i][j]==allRows[d][n]) {
+              console.log(clickVal.value)
+              console.log(thing.value)
+
+              thing.style.color="blue"
+            }else{
+              if (thing.style.color=="blue") {
+                thing.style.color="black"
+              }
+
+            }
+            if(d==i||n==j){
               thing.style.backgroundColor="#f5f371"
             }else{
               thing.style.backgroundColor="white"
             }
-            if(d>=getBigRow(clickRow)*3&&d<=getBigRow(clickRow)*3+2&&n>=getBigCol(clickCol)*3&&n<=getBigCol(clickCol)*3+2){
+            if(d>=getBigRow(i)*3&&d<=getBigRow(i)*3+2&&n>=getBigCol(j)*3&&n<=getBigCol(j)*3+2){
               thing.style.backgroundColor="#f5f371"
             }
           }
