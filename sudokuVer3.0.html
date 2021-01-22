@@ -3,7 +3,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@500;900&family=Josefin+Sans&display=swap" rel="stylesheet">
     <title>Sudoku Ver3.0</title>
     <style>
+    h1 {
+      font-family: 'Josefin Sans', sans-serif;
+      text-align: center;
+    }
     button{
+
       font-family: 'Josefin Sans', sans-serif;
       width:50px;
       height:50px;
@@ -11,18 +16,13 @@
       text-align:center;
       font-size: 24px;
     }
-    button.btn1{
-      display:inline-block;
-    }
-    button.btn2{
-      display:inline-block;
-    }
     table {
+      margin: 0 auto;
       border-radius: 10px;
       padding: 10px;
       font-family: 'Josefin Sans', sans-serif;
       overflow: hidden;
-      border: 2px solid #66635f;
+      border: 2px solid #0eb599;
     }
     p{
       width:35px;
@@ -35,17 +35,17 @@
 			border: 2px solid black;
 		}
     td:nth-of-type(3n) {
-        border-right: 3px solid #b305b0;
+        border-right: 3px solid #f79040;
     }
 
     tr:nth-of-type(3n) td {
-        border-bottom: 3px solid #b305b0;
+        border-bottom: 3px solid #f79040;
     }
     td:first-child{
-        border-left: 3px solid #b305b0;
+        border-left: 3px solid #f79040;
     }
     tr:first-child td {
-        border-top: 3px solid #b305b0;
+        border-top: 3px solid #f79040;
     }
     input{
       font-family: 'Josefin Sans', sans-serif;
@@ -55,11 +55,12 @@
       text-align:center;
     }
     #myDIV{
+      margin: 0 auto;
       border-radius: 10px;
       display:none;
-      width:300px;
+      width:275px;
       position: relative;
-      border: 3px solid #b305b0;
+      border: 3px solid #f79040;
     }
     button{
       border-radius: 10px;
@@ -67,20 +68,22 @@
 		</style>
   </head>
   <body>
+    <h1 style="color:#f79040">Luke's Sudoku Thing</h1>
     <table id="tbl">
 
     </table>
+  </br>
     <div id="myDIV">
-      <button onclick="numTest('bt1')"id="bt1" class="btn1">1</button>
-      <button onclick="numTest('bt2')"id="bt2" class="btn1">2</button>
-      <button onclick="numTest('bt3')"id="bt3" class="btn1">3</button>
-      <button onclick="numTest('bt4')"id="bt4" class="btn1">4</button>
-      <button onclick="numTest('bt5')"id="bt5" class="btn1">5</button>
+      <button onclick="numTest('bt1')"id="bt1">1</button>
+      <button onclick="numTest('bt2')"id="bt2">2</button>
+      <button onclick="numTest('bt3')"id="bt3">3</button>
+      <button onclick="numTest('bt4')"id="bt4">4</button>
+      <button onclick="numTest('bt5')"id="bt5">5</button>
       </br>
-      <button onclick="numTest('bt6')"id="bt6" class="btn2">6</button>
-      <button onclick="numTest('bt7')"id="bt7" class="btn2">7</button>
-      <button onclick="numTest('bt8')"id="bt8" class="btn2">8</button>
-      <button onclick="numTest('bt9')"id="bt9" class="btn2">9</button>
+      <button onclick="numTest('bt6')"id="bt6">6</button>
+      <button onclick="numTest('bt7')"id="bt7">7</button>
+      <button onclick="numTest('bt8')"id="bt8">8</button>
+      <button onclick="numTest('bt9')"id="bt9">9</button>
     </div>
     <script>
       var clickRow=0;
@@ -313,7 +316,7 @@
       clickCol=j
       var x = document.getElementById("myDIV");
       x.style.display = "block";
-      x.style.color="blue"
+      x.style.color="red"
       for (d=0;d<9;d++){
         for (n=0;n<9;n++){
           var idName="input"+d+"."+n
@@ -322,9 +325,9 @@
             if (allRows[i][j]==allRows[d][n]) {
               console.log(x.value)
               console.log(thing.value)
-              thing.style.color="blue"
+              thing.style.color="red"
             }else{
-              if (thing.style.color=="blue") {
+              if (thing.style.color=="red") {
                 thing.style.color="black"
               }
             }
@@ -344,7 +347,7 @@
       var clickID="input"+i+"."+j
       var clickVal=document.getElementById(clickID)
       console.log(clickVal.value)
-      clickVal.style.color="blue"
+      clickVal.style.color="red"
       var x = document.getElementById("myDIV");
       x.style.display = "none";
       for (d=0;d<9;d++){
@@ -356,9 +359,9 @@
               console.log(clickVal.value)
               console.log(thing.value)
 
-              thing.style.color="blue"
+              thing.style.color="red"
             }else{
-              if (thing.style.color=="blue") {
+              if (thing.style.color=="red") {
                 thing.style.color="black"
               }
 
@@ -406,8 +409,6 @@
         case "bt9":
           reloadBoard(clickRow,clickCol,9)
           break;
-
-
       }
     }
     //hello there
