@@ -316,7 +316,7 @@
       clickCol=j
       var x = document.getElementById("myDIV");
       x.style.display = "block";
-      x.style.color="red"
+      x.style.color="lightseagreen"
       for (d=0;d<9;d++){
         for (n=0;n<9;n++){
           var idName="input"+d+"."+n
@@ -325,9 +325,9 @@
             if (allRows[i][j]==allRows[d][n]) {
               console.log(x.value)
               console.log(thing.value)
-              thing.style.color="red"
+              thing.style.color="lightseagreen"
             }else{
-              if (thing.style.color=="red") {
+              if (thing.style.color=="lightseagreen") {
                 thing.style.color="black"
               }
             }
@@ -347,7 +347,7 @@
       var clickID="input"+i+"."+j
       var clickVal=document.getElementById(clickID)
       console.log(clickVal.value)
-      clickVal.style.color="red"
+      clickVal.style.color="lightseagreen"
       var x = document.getElementById("myDIV");
       x.style.display = "none";
       for (d=0;d<9;d++){
@@ -359,9 +359,9 @@
               console.log(clickVal.value)
               console.log(thing.value)
 
-              thing.style.color="red"
+              thing.style.color="lightseagreen"
             }else{
-              if (thing.style.color=="red") {
+              if (thing.style.color=="lightseagreen") {
                 thing.style.color="black"
               }
 
