@@ -7,7 +7,9 @@
       font-family: 'Josefin Sans', sans-serif;
       text-align: center;
     }
-    button{
+    .input{
+      border-radius: 10px;
+
 
       font-family: 'Josefin Sans', sans-serif;
       width:50px;
@@ -35,69 +37,160 @@
 			border: 2px solid black;
 		}
     td:nth-of-type(3n) {
-        border-right: 3px solid #f79040;
+        border-right: 5px solid #ff8c00;
     }
 
     tr:nth-of-type(3n) td {
-        border-bottom: 3px solid #f79040;
+        border-bottom: 5px solid #ff8c00;
     }
     td:first-child{
-        border-left: 3px solid #f79040;
+        border-left: 3px solid #32CD32;
     }
     tr:first-child td {
-        border-top: 3px solid #f79040;
+        border-top: 3px solid #32CD32;
     }
-    input{
-      font-family: 'Josefin Sans', sans-serif;
-      width:35px;
-      height:35px;
-      border: 0;
-      text-align:center;
+    td:last-child{
+        border-right: 3px solid #32CD32;
+    }
+    tr:last-child td {
+        border-bottom: 3px solid #32CD32;
     }
     #myDIV{
       margin: 0 auto;
       border-radius: 10px;
       display:none;
-      width:275px;
+      width:300px;
       position: relative;
       border: 3px solid #f79040;
     }
-    button{
-      border-radius: 10px;
+    .dropbtn {
+      background-color: #3498DB;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
     }
+    .dropbtn:hover, .dropbtn:focus {
+      background-color: #2980B9;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {background-color: #ddd}
+    .show {display:block;}
 		</style>
   </head>
   <body>
-    <h1 style="color:#f79040">Luke's Sudoku Thing</h1>
+    <div class="dropdown">
+     <button onclick="myFunction()" class="dropbtn">Theme</button>
+     <div id="myDropdown" class="dropdown-content">
+       <a href="#" onclick="themeChange('classicFuture')">Classic Future</a>
+       <a href="#"onclick="themeChange('black')">Black</a>
+       <a href="#"onclick="themeChange('violet')">Neon</a>
+       <a href="#"onclick="themeChange('camo')">Camo</a>
+     </div>
+    </div>
+    <h1 id="title"style="color:#f79040">Luke's Sudoku Thing</h1>
+    <h1 id="win"><h1>
     <table id="tbl">
-
     </table>
-  </br>
     <div id="myDIV">
-      <button onclick="numTest('bt1')"id="bt1">1</button>
-      <button onclick="numTest('bt2')"id="bt2">2</button>
-      <button onclick="numTest('bt3')"id="bt3">3</button>
-      <button onclick="numTest('bt4')"id="bt4">4</button>
-      <button onclick="numTest('bt5')"id="bt5">5</button>
+      <button onclick="numTest('bt1')"id="bt1"class="input">1</button>
+      <button onclick="numTest('bt2')"id="bt2"class="input">2</button>
+      <button onclick="numTest('bt3')"id="bt3"class="input">3</button>
+      <button onclick="numTest('bt4')"id="bt4"class="input">4</button>
+      <button onclick="numTest('bt5')"id="bt5"class="input">5</button>
       </br>
-      <button onclick="numTest('bt6')"id="bt6">6</button>
-      <button onclick="numTest('bt7')"id="bt7">7</button>
-      <button onclick="numTest('bt8')"id="bt8">8</button>
-      <button onclick="numTest('bt9')"id="bt9">9</button>
+      <button onclick="numTest('bt6')"id="bt6"class="input">6</button>
+      <button onclick="numTest('bt7')"id="bt7"class="input">7</button>
+      <button onclick="numTest('bt8')"id="bt8"class="input">8</button>
+      <button onclick="numTest('bt9')"id="bt9"class="input">9</button>
     </div>
     <script>
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+      var highlightColor="#f5f371";
+      var inputColor="#6993d6";
+      var sameColor="lightseagreen";
+      function themeChange(input){
+        switch(input){
+          case "classicFuture":
+          highlightColor="#f5f371";
+          inputColor="#6993d6";
+          sameColor="lightseagreen";
+
+            document.getElementById("tbl").style.border="3px solid #0eb599";
+            document.getElementById("myDIV").style.border="3px solid #f79040";
+            document.getElementById("title").style.color="#f79040";
+            break;
+          case "black":
+            highlightColor="#4a4a4a";
+            inputColor="#6b6969";
+            sameColor="darkgray";
+            document.getElementById("tbl").style.border="3px solid black";
+            document.getElementById("myDIV").style.border="3px solid black";
+            document.getElementById("title").style.color="black";
+            break;
+          case "violet":
+            highlightColor="#099FFF";
+            inputColor="#33FF00";
+            sameColor="darkviolet";
+            document.getElementById("tbl").style.border="3px solid #CC00FF";
+            document.getElementById("myDIV").style.border="3px solid #FF6600";
+            document.getElementById("title").style.color="#191970";
+            break;
+          case "camo":
+            highlightColor="#f5eda9";
+            inputColor="#c9b559";
+            sameColor="olivedrab";
+            document.getElementById("tbl").style.border="3px solid #54280a";
+            document.getElementById("myDIV").style.border="3px solid #ad8a53";
+            document.getElementById("title").style.color="#85b842";
+            break;
+        }
+      }
+      var win=false;
       var clickRow=0;
       var clickCol=0;
       var value="1";
-      var rowNum1=["5","","","7","","","6","",""];
-      var rowNum2=["8","","","","","","9","",""];
-      var rowNum3=["","9","","","6","","","","7"];
-      var rowNum4=["","4","","","","","","",""];
-      var rowNum5=["","5","","","","","","6",""];
-      var rowNum6=["","","2","4","","7","","","8"];
-      var rowNum7=["9","","1","","","","","",""];
-      var rowNum8=["","","","","2","","8","",""];
-      var rowNum9=["","7","","1","5","","","",""];
+      var rowNum1=["1","","","4","8","9","","","6"];
+      var rowNum2=["7","3","","","","","","4",""];
+      var rowNum3=["","","","","","1","2","9","5"];
+      var rowNum4=["","","7","1","2","","6","",""];
+      var rowNum5=["5","","","7","","3","","","8"];
+      var rowNum6=["","","6","","9","5","7","",""];
+      var rowNum7=["9","1","4","6","","","","",""];
+      var rowNum8=["","2","","","","","","3","7"];
+      var rowNum9=["8","","","5","1","2","","","4"];
       var allRows=[rowNum1,rowNum2,rowNum3,rowNum4,rowNum5,rowNum6,rowNum7,rowNum8,rowNum9];
       var allRows2=JSON.parse(JSON.stringify(allRows));
       var outPut="";
@@ -108,7 +201,7 @@
             outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
           }else if (allRows[i][j]==""){
 
-            outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+            outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
           }
         }
         outPut+="</tr>";
@@ -153,118 +246,115 @@
         return returnValue
       }
       function reloadBoard(row,col, number) {
-        console.log(allRows[row][col])
-        console.log(allRows2[row][col])
-        returnValue2=false;
+          returnValue2=false;
 
-        outPut=""
-        replaceSquareString = ""
-        replaceRowString = ""
-        replaceColString = ""
-        foundInSquare = false
-        foundInRow = false
-        foundInCol = false
-        replaced = false
+          outPut=""
+          replaceSquareString = ""
+          replaceRowString = ""
+          replaceColString = ""
+          foundInSquare = false
+          foundInRow = false
+          foundInCol = false
+          replaced = false
 
-        checkSquareValue = checkSquare(row,col,number)
-        if (checkSquareValue[3] == 1) {
-          foundInSquare=true
-          replaceSquareString =
-          returnValue2=true
-        }
-        checkRowValue = _checkRow(row,col,number)
-        if (checkRowValue[3] == 1) {
-          foundInRow=true
-          returnValue2=true
-        }
-        checkColValue = _checkCol(row,col,number)
-        if (checkColValue[3] == 1) {
-          foundInCol=true
-          returnValue2=true
-        }
-        for (i=0;i<9;i++){
-          outPut+="<tr>";
-          for (j=0;j<9;j++){
+          checkSquareValue = checkSquare(row,col,number)
+          if (checkSquareValue[3] == 1) {
+            foundInSquare=true
+            replaceSquareString =
+            returnValue2=true
+          }
+          checkRowValue = _checkRow(row,col,number)
+          if (checkRowValue[3] == 1) {
+            foundInRow=true
+            returnValue2=true
+          }
+          checkColValue = _checkCol(row,col,number)
+          if (checkColValue[3] == 1) {
+            foundInCol=true
+            returnValue2=true
+          }
+          for (i=0;i<9;i++){
+            outPut+="<tr>";
+            for (j=0;j<9;j++){
 
-            if (allRows[i][j]!=""){
-              replaced = false
-              if (checkRowValue[3]!=checkSquareValue[3]) {
-                if (foundInRow) {
-                  if (i==checkRowValue[0] && j==checkRowValue[1]) {
-                    if (i!=row) {
-                      outPut+="<td><p id=\"input"+i+"."+j+"\"center;color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
+              if (allRows[i][j]!=""){
+                replaced = false
+                if (checkRowValue[3]!=checkSquareValue[3]) {
+                  if (foundInRow) {
+                    if (i==checkRowValue[0] && j==checkRowValue[1]) {
+                      if (i!=row) {
+                        outPut+="<td><p id=\"input"+i+"."+j+"\"center;color:red;background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
+                      }else{
+                        outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                      }
+
+                      replaced = true
+                    }
+                  }
+                }
+                if (foundInCol) {
+                  if (i==checkColValue[0] && j==checkColValue[1]) {
+                    if (j!=col) {
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
                     }else{
-                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                    }
+                    replaced = true
+                  }
+
+                }
+                if (checkSquareValue[1]!=checkColValue[1]||checkSquareValue[3]!=checkColValue[3]) {
+
+                  if (foundInSquare) {
+                    if (i==checkSquareValue[0] && j==checkSquareValue[1]) {
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
+                      replaced = true
+                    }
+                  }
+                }
+                if(!(foundInCol)&&!(foundInRow)&&!(foundInSquare)){
+                  allowChange=true;
+                  allRows[row][col]=number
+
+
+                }
+                if (!replaced) {
+                  if (i==row&&j==col) {
+                    outPut+="<td><p style=\"color:"+inputColor+";background-color:highlightColor\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                  }else if(allRows[i][j]!=allRows2[i][j]){
+                    if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
+                      outPut+="<td><p style=\"color:"+inputColor+";background-color:highlightColor\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                    }else{
+                      outPut+="<td><p style=\"color:"+inputColor+"\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                    }
+                  }
+                  else{
+                    if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:highlightColor\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
+                    }else{
+                      outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                     }
 
-                    replaced = true
                   }
+
+
                 }
-              }
-              if (foundInCol) {
-                if (i==checkColValue[0] && j==checkColValue[1]) {
-                  if (j!=col) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
-                  }else{
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-                  }
-                  replaced = true
-                }
-
-              }
-              if (checkSquareValue[1]!=checkColValue[1]||checkSquareValue[3]!=checkColValue[3]) {
-
-                if (foundInSquare) {
-                  if (i==checkSquareValue[0] && j==checkSquareValue[1]) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"color:red;background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+number+"</p></td>"
-                    replaced = true
-                  }
-                }
-              }
-              if(!(foundInCol)&&!(foundInRow)&&!(foundInSquare)){
-                allowChange=true;
-                allRows[row][col]=number
-
-
-              }
-              if (!replaced) {
-                if (i==row&&j==col) {
-                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
-                }else if(allRows[i][j]!=allRows2[i][j]){
-                  console.log("hi")
+              }else if (allRows[i][j]==""){
                   if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
-                    outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                    outPut+="<td><p style=\"color:"+inputColor+";background-color:highlightColor\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
                   }else{
-                    outPut+="<td><p style=\"color:#6993d6\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
+                    outPut+="<td><p style=\"color:"+inputColor+";background-color:white\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                   }
-                }
-                else{
-                  if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:#f5f371\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-                  }else{
-                    outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-                  }
-
-                }
-
-
               }
-            }else if (allRows[i][j]==""){
-                if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
-                  outPut+="<td><p style=\"color:#6993d6;background-color:#f5f371\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
-                }else{
-                  outPut+="<td><p style=\"color:#6993d6;background-color:white\"id=\"input"+i+"."+j+"\"onclick=\"myFunction("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-                }
+
             }
+            outPut+="</tr>";
 
           }
-          outPut+="</tr>";
+          document.getElementById("tbl").innerHTML = outPut;
+          return returnValue2
+          checkwin()
 
-        }
-        console.log(allRows[row][col])
-        console.log(allRows2[row][col])
-        document.getElementById("tbl").innerHTML = outPut;
-        return returnValue2
       }
     function checkCol(row,col,number){
         if (checkGridCol(col)==0) {
@@ -310,69 +400,66 @@
         }
       }
     document.getElementById("tbl").innerHTML = outPut;
-    function myFunction(i,j) {
-      console.log("clicked")
-      clickRow=i
-      clickCol=j
-      var x = document.getElementById("myDIV");
-      x.style.display = "block";
-      x.style.color="lightseagreen"
-      for (d=0;d<9;d++){
-        for (n=0;n<9;n++){
-          var idName="input"+d+"."+n
-          var thing=document.getElementById(idName)
-          if(thing){
-            if (allRows[i][j]==allRows[d][n]) {
-              console.log(x.value)
-              console.log(thing.value)
-              thing.style.color="lightseagreen"
-            }else{
-              if (thing.style.color=="lightseagreen") {
-                thing.style.color="black"
+    function clickFunc(i,j) {
+      if (win==false) {
+        clickRow=i
+        clickCol=j
+        var x = document.getElementById("myDIV");
+        x.style.display = "block";
+        x.style.color=sameColor
+        for (d=0;d<9;d++){
+          for (n=0;n<9;n++){
+            var idName="input"+d+"."+n
+            var thing=document.getElementById(idName)
+            if(thing){
+              if (allRows[i][j]==allRows[d][n]) {
+                thing.style.color=sameColor
+              }else{
+                if (thing.style.color!="black"&&thing.style.color!="red") {
+                  thing.style.color="black"
+                }
               }
-            }
-            if(d==clickRow||n==clickCol){
-              thing.style.backgroundColor="#f5f371"
-            }else if(d!=clickRow&&n!=clickCol){
-              thing.style.backgroundColor="white"
-            }
-            if(d>=getBigRow(clickRow)*3&&d<=getBigRow(clickRow)*3+2&&n>=getBigCol(clickCol)*3&&n<=getBigCol(clickCol)*3+2){
-              thing.style.backgroundColor="#f5f371"
+              if(d==clickRow||n==clickCol){
+                thing.style.backgroundColor=highlightColor
+              }else if(d!=clickRow&&n!=clickCol){
+                thing.style.backgroundColor="white"
+              }
+              if(d>=getBigRow(clickRow)*3&&d<=getBigRow(clickRow)*3+2&&n>=getBigCol(clickCol)*3&&n<=getBigCol(clickCol)*3+2){
+                thing.style.backgroundColor=highlightColor
+              }
             }
           }
         }
       }
     }
     function highlightNum(i,j){
-      var clickID="input"+i+"."+j
-      var clickVal=document.getElementById(clickID)
-      console.log(clickVal.value)
-      clickVal.style.color="lightseagreen"
-      var x = document.getElementById("myDIV");
-      x.style.display = "none";
-      for (d=0;d<9;d++){
-        for (n=0;n<9;n++){
-          var idName="input"+d+"."+n
-          var thing=document.getElementById(idName)
-          if(thing){
-            if (allRows[i][j]==allRows[d][n]) {
-              console.log(clickVal.value)
-              console.log(thing.value)
+      if (win==false) {
+        var clickID="input"+i+"."+j
+        var clickVal=document.getElementById(clickID)
+        clickVal.style.color=sameColor
+        var x = document.getElementById("myDIV");
+        x.style.display = "none";
+        for (d=0;d<9;d++){
+          for (n=0;n<9;n++){
+            var idName="input"+d+"."+n
+            var thing=document.getElementById(idName)
+            if(thing){
+              if (allRows[i][j]==allRows[d][n]) {
+                console.log(clickVal.color)
+                console.log(thing.color)
 
-              thing.style.color="lightseagreen"
-            }else{
-              if (thing.style.color=="lightseagreen") {
-                thing.style.color="black"
+                thing.style.color=sameColor
+              }else if (thing.style.color!="black"&&thing.style.color!="red") {
+                  thing.style.color="black"
               }
-
-            }
-            if(d==i||n==j){
-              thing.style.backgroundColor="#f5f371"
-            }else{
-              thing.style.backgroundColor="white"
-            }
-            if(d>=getBigRow(i)*3&&d<=getBigRow(i)*3+2&&n>=getBigCol(j)*3&&n<=getBigCol(j)*3+2){
-              thing.style.backgroundColor="#f5f371"
+              if(d==i||n==j){
+                thing.style.backgroundColor=highlightColor
+              }else{
+                thing.style.backgroundColor="white"
+              }
+              if(d>=getBigRow(i)*3&&d<=getBigRow(i)*3+2&&n>=getBigCol(j)*3&&n<=getBigCol(j)*3+2){
+                thing.style.backgroundColor=highlightColor
+              }
             }
           }
         }
@@ -411,7 +498,20 @@
           break;
       }
     }
-    //hello there
+    function checkWin(){
+      var finish=true;
+      for (d=0;d<9;d++){
+        for (n=0;n<9;n++){
+          if(allRows[i][j]){
+            finish=false;
+          }
+        }
+      }
+      if (finish==true) {
+        document.getElementById("win").innerHTML="YOU WIN!"
+        win=true
+      }
+    }
     </script>
   </body>
 </html>
