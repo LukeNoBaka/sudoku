@@ -6,6 +6,8 @@
     h1 {
       font-family: 'Josefin Sans', sans-serif;
       text-align: center;
+
+      float:center;
     }
     .input{
       border-radius: 10px;
@@ -64,6 +66,7 @@
       border: 3px solid #f79040;
     }
     .dropbtn {
+
       background-color: #3498DB;
       color: white;
       padding: 16px;
@@ -98,8 +101,8 @@
   </head>
   <body>
     <div class="dropdown">
-     <button onclick="myFunction()" class="dropbtn">Theme</button>
-     <div id="myDropdown" class="dropdown-content">
+     <button id="dropbtn"style="display:inline-block"onclick="myFunction()" class="dropbtn">Theme</button>
+     <div id="myDropdown" class="dropdown-content" >
        <a href="#" onclick="themeChange('classicFuture')">Classic Future</a>
        <a href="#"onclick="themeChange('black')">Black</a>
        <a href="#"onclick="themeChange('violet')">Neon</a>
@@ -121,6 +124,8 @@
       <button onclick="numTest('bt7')"id="bt7"class="input">7</button>
       <button onclick="numTest('bt8')"id="bt8"class="input">8</button>
       <button onclick="numTest('bt9')"id="bt9"class="input">9</button>
+      </br>
+      <button onclick="numTest('clear')"id="clear"class="input">clear</button>
     </div>
     <script>
       function myFunction() {
@@ -246,8 +251,10 @@
         return returnValue
       }
       function reloadBoard(row,col, number) {
+          if (number=="") {
+            allRows[row][col]=""
+          }
           returnValue2=false;
-
           outPut=""
           replaceSquareString = ""
           replaceRowString = ""
@@ -315,8 +322,6 @@
                 if(!(foundInCol)&&!(foundInRow)&&!(foundInSquare)){
                   allowChange=true;
                   allRows[row][col]=number
-
-
                 }
                 if (!replaced) {
                   if (i==row&&j==col) {
@@ -334,10 +339,7 @@
                     }else{
                       outPut+="<td><p id=\"input"+i+"."+j+"\"style=\"background-color:white\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                     }
-
                   }
-
-
                 }
               }else if (allRows[i][j]==""){
                   if (i==row||j==col||i>=getBigRow(clickRow)*3&&i<=getBigRow(clickRow)*3+2&&j>=getBigCol(clickCol)*3&&j<=getBigCol(clickCol)*3+2) {
@@ -346,15 +348,12 @@
                     outPut+="<td><p style=\"color:"+inputColor+";background-color:white\"id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
                   }
               }
-
             }
             outPut+="</tr>";
-
           }
           document.getElementById("tbl").innerHTML = outPut;
+          checkWin()
           return returnValue2
-          checkwin()
-
       }
     function checkCol(row,col,number){
         if (checkGridCol(col)==0) {
@@ -496,13 +495,16 @@
         case "bt9":
           reloadBoard(clickRow,clickCol,9)
           break;
+        case "clear":
+          reloadBoard(clickRow,clickCol,"")
+          break;
       }
     }
     function checkWin(){
       var finish=true;
       for (d=0;d<9;d++){
         for (n=0;n<9;n++){
-          if(allRows[i][j]){
+          if(allRows[d][n]==""){
             finish=false;
           }
         }
