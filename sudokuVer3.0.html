@@ -6,8 +6,6 @@
     h1 {
       font-family: 'Josefin Sans', sans-serif;
       text-align: center;
-
-      float:center;
     }
     .input{
       border-radius: 10px;
@@ -127,6 +125,41 @@
       </br>
       <button onclick="numTest('clear')"id="clear"class="input">clear</button>
     </div>
+    <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "khangisme";
+    $dbname = "sudokuTables";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if (!$conn) {
+     die("Connection failed: " . mysql_error());
+    }
+
+    $sql = 'select * from sdklvl1';
+
+    $result= mysqli_query($conn, $sql);
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        for ($i=1; $i < 10; $i++){
+          $value1=$row["row1"];
+          $value2=$row["row2"];
+          $value3=$row["row3"];
+          $value4=$row["row4"];
+          $value5=$row["row5"];
+          $value6=$row["row6"];
+          $value7=$row["row7"];
+          $value8=$row["row8"];
+          $value9=$row["row9"];
+          }
+        }
+
+      }else {
+      echo "0 results";
+    }
+
+    $conn->close();
+    ?>
     <script>
       function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
@@ -183,29 +216,30 @@
             break;
         }
       }
+
       var win=false;
       var clickRow=0;
       var clickCol=0;
       var value="1";
-      var rowNum1=["1","","","4","8","9","","","6"];
-      var rowNum2=["7","3","","","","","","4",""];
-      var rowNum3=["","","","","","1","2","9","5"];
-      var rowNum4=["","","7","1","2","","6","",""];
-      var rowNum5=["5","","","7","","3","","","8"];
-      var rowNum6=["","","6","","9","5","7","",""];
-      var rowNum7=["9","1","4","6","","","","",""];
-      var rowNum8=["","2","","","","","","3","7"];
-      var rowNum9=["8","","","5","1","2","","","4"];
+      var rowNum1='<?php echo $value1 ;?>'.split("")//["1","","","4","8","9","","","6"];
+      var rowNum2='<?php echo $value2 ;?>'.split("")//["7","3","","","","","","4",""];
+      var rowNum3='<?php echo $value3 ;?>'.split("")//["","","","","","1","2","9","5"];
+      var rowNum4='<?php echo $value4 ;?>'.split("")//["","","7","1","2","","6","",""];
+      var rowNum5='<?php echo $value5 ;?>'.split("")//["5","","","7","","3","","","8"];
+      var rowNum6='<?php echo $value6 ;?>'.split("")//["","","6","","9","5","7","",""];
+      var rowNum7='<?php echo $value7 ;?>'.split("")//["9","1","4","6","","","","",""];
+      var rowNum8='<?php echo $value8 ;?>'.split("")//["","2","","","","","","3","7"];
+      var rowNum9='<?php echo $value9 ;?>'.split("")//["8","","","5","1","2","","","4"];
       var allRows=[rowNum1,rowNum2,rowNum3,rowNum4,rowNum5,rowNum6,rowNum7,rowNum8,rowNum9];
       var allRows2=JSON.parse(JSON.stringify(allRows));
       var outPut="";
       for (i=0;i<allRows.length;i++){
         outPut+="<tr>";
         for (j=0;j<allRows[i].length;j++){
-          if (allRows[i][j]!=""){
+          if (allRows[i][j]!="0"){
             outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"highlightNum("+i+","+j+")\">"+allRows[i][j]+"</p></td>";
-          }else if (allRows[i][j]==""){
-
+          }else if (allRows[i][j]=="0"){
+            allRows[i][j]="";
             outPut+="<td><p id=\"input"+i+"."+j+"\"onclick=\"clickFunc("+i+","+j+");\">"+allRows[i][j]+"</p></td>";
           }
         }
@@ -320,7 +354,6 @@
                   }
                 }
                 if(!(foundInCol)&&!(foundInRow)&&!(foundInSquare)){
-                  allowChange=true;
                   allRows[row][col]=number
                 }
                 if (!replaced) {
@@ -444,8 +477,6 @@
             var thing=document.getElementById(idName)
             if(thing){
               if (allRows[i][j]==allRows[d][n]) {
-                console.log(clickVal.color)
-                console.log(thing.color)
 
                 thing.style.color=sameColor
               }else if (thing.style.color!="black"&&thing.style.color!="red") {
